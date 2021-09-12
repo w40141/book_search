@@ -17,7 +17,7 @@ defmodule TableFormatter do
 
   def widths_of(columns) do
     for column <- columns do
-      Enum.map(column, fn(x) -> String.length(x) * 3 end)
+      Enum.map(column, fn(x) -> String.length(x) end)
       |> Enum.max()
     end
   end
@@ -26,7 +26,7 @@ defmodule TableFormatter do
   def printable(str), do: to_string(str)
 
   def format_for(column_widths) do
-    Enum.map_join(column_widths, " | ", fn width -> "~-#{width}s" end) <> "~n"
+    Enum.map_join(column_widths, " | ", fn width -> "~-#{width}ts" end) <> "~n"
     |> to_charlist
   end
 
@@ -42,7 +42,7 @@ defmodule TableFormatter do
   end
 
   def puts_one_line_in_columns(fields, format) do
-    IO.puts(is_list(fields))
+    # IO.puts(is_list(fields))
     :io.format(format, fields)
   end
 end
