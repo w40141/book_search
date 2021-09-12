@@ -31,7 +31,8 @@ defmodule BookSearch.DecodeResponse do
     {identifies, org} = Map.split(map, ["industryIdentifiers"])
 
     Map.merge(org, format_identifier(identifies))
-    |> Map.take(["authors", "title", "pageCount", "ISBN_10", "ISBN_13"])
+    # |> Map.take(["authors", "title", "pageCount", "ISBN_10", "ISBN_13"])
+    |> Map.take(BookSearch.CLI.default_header())
   end
 
   defp format_identifier(map) do

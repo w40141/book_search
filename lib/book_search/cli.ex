@@ -1,5 +1,5 @@
 defmodule BookSearch.CLI do
-  # import TableFormatter, only: [print_table_for_columns: 2]
+  import TableFormatter, only: [print_table_for_columns: 2]
 
   @default_count 10
 
@@ -8,6 +8,8 @@ defmodule BookSearch.CLI do
   that end up generating a table of the information of _n_ books in a search
   by google API
   """
+
+  def default_header(), do: ["authors", "title", "pageCount", "ISBN_10", "ISBN_13"]
 
   def main(argv) do
     argv
@@ -42,7 +44,6 @@ defmodule BookSearch.CLI do
   def process({keyword, count}) do
     BookSearch.SearchGoogle.fetch(keyword, count)
     |> BookSearch.DecodeResponse.decode_response()
-
-    # |> print_table_for_columns(["authors", "created_at", "title"])
+    |> print_table_for_columns(default_header())
   end
 end

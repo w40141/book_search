@@ -15,19 +15,19 @@ defmodule TableFormatter do
     end
   end
 
-  def printable(str) when is_binary(str), do: str
-  def printable(str), do: to_string(str)
-
   def widths_of(columns) do
     for column <- columns do
-      column
-      |> Enum.map(&String.length/1)
+      Enum.map(column, fn(x) -> String.length(x) * 3 end)
       |> Enum.max()
     end
   end
 
+  def printable(str) when is_binary(str), do: str
+  def printable(str), do: to_string(str)
+
   def format_for(column_widths) do
     Enum.map_join(column_widths, " | ", fn width -> "~-#{width}s" end) <> "~n"
+    |> to_charlist
   end
 
   def separator(column_widths) do
@@ -42,6 +42,7 @@ defmodule TableFormatter do
   end
 
   def puts_one_line_in_columns(fields, format) do
+    IO.puts(is_list(fields))
     :io.format(format, fields)
   end
 end
